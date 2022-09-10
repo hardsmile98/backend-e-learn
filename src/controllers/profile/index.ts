@@ -1,9 +1,8 @@
-import { Request, Response } from 'express'
-import { UserService } from '../../services/user'
+import { Request, Response } from 'express';
 
 class ProfileController {
-  public me = async(req: Request, res: Response) => {
-    return res.json({ success: true })
-  }
+  public me = async(_: Request, res: Response) => {
+    return res.json({ success: true });
+  };
 }
 export default ProfileController;

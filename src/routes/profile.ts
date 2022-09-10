@@ -1,9 +1,9 @@
-import { Router } from 'express'
-import ProfileController from '../controllers/profile'
+import { Router } from 'express';
+import ProfileController from '../controllers/profile';
 
-const router = Router()
-const profile = new ProfileController()
+const router = Router();
+const profile = new ProfileController();
 
-router.get('/me', profile.me)
+router.get('/me', profile.me);
 
-export default router
+export default router;

@@ -7,17 +7,17 @@ import { Profile } from 'enities/profile';
 @Entity()
 export class Level extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
 
   @Column('int', { nullable: false, default: 1 })
-  value: number;
+    value: number;
   
   @Column('int', { nullable: false, default: 0 })
-  count: number;
+    count: number;
 
   @Column('int', { nullable: false, default: 20 })
-  all: number;
+    all: number;
 
   @OneToOne(() => Profile, (profile) => profile.level)
-    profile: Profile
+    profile: Profile;
 }

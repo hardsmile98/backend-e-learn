@@ -1,4 +1,4 @@
- /**
+/**
  * @swagger
  * /api/v1/auth/register:
  *   post:
@@ -30,7 +30,7 @@
  *                   example: true
 */
 
- /**
+/**
  * @swagger
  * /api/v1/auth/login:
  *   post:

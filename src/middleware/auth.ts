@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken'
-import { Request, Response, NextFunction } from 'express'
+import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
 
 type IJWTPayload = {
     id: number,
@@ -7,22 +7,22 @@ type IJWTPayload = {
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
   if (req.method === 'OPTIONS') {
-    return next()
+    return next();
   }
   try {
     const { token } = req.cookies;
     if(!token) {
-      return res.status(401).json({ message: 'Нет авторизации' })
+      return res.status(401).json({ message: 'Нет авторизации' });
     }
 
     const decode = <IJWTPayload>jwt.verify(token, process.env.SECRET);
     const { id } = decode;
     req.id = id;
 
-    next()
+    next();
   } catch (e) {
-    res.status(401).json({ message: 'Нет авторизации' })
+    res.status(401).json({ message: 'Нет авторизации' });
   }
-}
+};
 
 export default auth;

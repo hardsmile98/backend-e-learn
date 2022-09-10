@@ -7,29 +7,29 @@ import { Profile } from 'enities/profile';
 @Entity()
 export class Visit extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
   
   @Column('boolean', { nullable: false, default: false })
-  Mo: boolean;
+    Mo: boolean;
 
   @Column('boolean', { nullable: false, default: false })
-  Tu: boolean;
+    Tu: boolean;
   
   @Column('boolean', { nullable: false, default: false })
-  We: boolean;
+    We: boolean;
   
   @Column('boolean', { nullable: false, default: false })
-  Th: boolean;
+    Th: boolean;
   
   @Column('boolean', { nullable: false, default: false })
-  Fr: boolean;
+    Fr: boolean;
 
   @Column('boolean', { nullable: false, default: false })
-  Sa: boolean;
+    Sa: boolean;
   
   @Column('boolean', { nullable: false, default: false })
-  Su: boolean;
+    Su: boolean;
   
   @OneToOne(() => Profile, (profile) => profile.visit)
-    profile: Profile
+    profile: Profile;
 }

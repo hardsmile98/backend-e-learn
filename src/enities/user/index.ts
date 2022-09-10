@@ -7,18 +7,18 @@ import { Profile } from '../profile';
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
 
   @Column('varchar', { nullable: false, length: 100 })
-  login: string;
+    login: string;
 
   @Column('varchar', { nullable: false, length: 100 })
-  name: string;
+    name: string;
 
   @Column('varchar', { nullable: false, length: 100 })
-  password: string;
+    password: string;
 
   @OneToOne(() => Profile, (profile) => profile.user)
     @JoinColumn()
-    profile: Profile
+    profile: Profile;
 }

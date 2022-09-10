@@ -18,7 +18,7 @@ export const dbCreateConnection = async (): Promise<Connection | null> => {
     
     console.log(`DB connection success. DB: '${conn.options.database}'`);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
   return null;
 };
