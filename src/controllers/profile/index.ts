@@ -9,10 +9,12 @@ class ProfileController {
     this.userService = new UserService();
   }
   
+  // check auth
   public me = async(_: Request, res: Response) => {
     return res.json({ success: true });
   };
 
+  // get profile info
   public getInfo = async(req: Request, res: Response) => {
     const { id } = req;
 
@@ -54,6 +56,7 @@ class ProfileController {
     }
   };
 
+  // bonus accrual every day
   public accrue = async(req: Request, res: Response) => {
     const { id } = req;
 
