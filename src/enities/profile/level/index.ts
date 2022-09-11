@@ -1,13 +1,12 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column, 
-  BaseEntity, OneToOne,
+  Entity, PrimaryGeneratedColumn,
+  Column, BaseEntity,
 } from 'typeorm';
-import { Profile } from 'enities/profile';
   
 @Entity()
 export class Level extends BaseEntity {
   @PrimaryGeneratedColumn()
-    id: number;
+    levleId: number;
 
   @Column('int', { nullable: false, default: 1 })
     value: number;
@@ -18,6 +17,10 @@ export class Level extends BaseEntity {
   @Column('int', { nullable: false, default: 20 })
     all: number;
 
-  @OneToOne(() => Profile, (profile) => profile.level)
-    profile: Profile;
+  constructor() {
+    super();
+    this.value = 1;
+    this.count = 0;
+    this.all = 20;
+  }
 }

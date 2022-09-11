@@ -1,13 +1,12 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column, 
-  BaseEntity, OneToOne,
+  Entity, PrimaryGeneratedColumn,
+  Column, BaseEntity,
 } from 'typeorm';
-import { Profile } from 'enities/profile';
     
 @Entity()
 export class Visit extends BaseEntity {
   @PrimaryGeneratedColumn()
-    id: number;
+    visitId: number;
   
   @Column('boolean', { nullable: false, default: false })
     Mo: boolean;
@@ -29,7 +28,15 @@ export class Visit extends BaseEntity {
   
   @Column('boolean', { nullable: false, default: false })
     Su: boolean;
-  
-  @OneToOne(() => Profile, (profile) => profile.visit)
-    profile: Profile;
+
+  constructor() {
+    super();
+    this.Mo = false;
+    this.Th = false;
+    this.Th = false;
+    this.We = false;
+    this.Fr = false;
+    this.Sa = false;
+    this.Su = false;
+  }
 }

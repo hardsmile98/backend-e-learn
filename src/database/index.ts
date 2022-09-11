@@ -1,5 +1,5 @@
 import { Connection, createConnection } from 'typeorm';
-import Entries from "enities";
+import Entries from "../enities";
 
 export const dbCreateConnection = async (): Promise<Connection | null> => {
   try {

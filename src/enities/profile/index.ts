@@ -2,14 +2,13 @@ import {
   Entity, PrimaryGeneratedColumn,UpdateDateColumn,
   Column, BaseEntity, OneToOne, JoinColumn,
 } from 'typeorm';
-import { User } from "../user";
 import { Level } from "./level";
 import { Visit } from './visit';
 
 @Entity()
 export class Profile extends BaseEntity {
   @PrimaryGeneratedColumn()
-    id: number;
+    idProfile: number;
 
   @UpdateDateColumn()
     updatedDate: Date;
@@ -20,14 +19,24 @@ export class Profile extends BaseEntity {
   @Column('int', { nullable: false, default: 0 })
     words: number;
 
-  @OneToOne(() => User, (user) => user.profile)
-    user: User;
+  @Column({ nullable: false })
+    levelId: number;
 
-  @OneToOne(() => Level, (level) => level.profile)
-    @JoinColumn()
+  @Column({ nullable: false })
+    visitId: number;
+
+  @OneToOne(() => Level)
+    @JoinColumn({name: 'levelId'})
     level: Level;
 
-  @OneToOne(() => Visit, (visit) => visit.profile)
-    @JoinColumn()
+  @OneToOne(() => Visit)
+    @JoinColumn({name: 'visitId'})
     visit: Visit;
+
+  constructor() {
+    super();
+    this.balance = 0;
+    this.words = 0;
+    this.updatedDate = new Date();
+  }
 }

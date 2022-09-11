@@ -5,5 +5,6 @@ const router = Router();
 const profile = new ProfileController();
 
 router.get('/me', profile.me);
+router.get('/info', profile.getInfo);
 
 export default router;
