@@ -29,12 +29,39 @@ class ProfileController {
       const now = new Date();
       const nowDate = now.toLocaleDateString();
 
+      // Проверка на дату последнего посещения
       if(nowDate !== profileVisitDate) {
         await this.userService.updateDate({
           date: now,
           profileId: user.profileId
         });
       }
+
+      // Прошло ли семь дней с последнего входа
+      const isBeen7Days = Math.ceil((now.getTime() - profile.updatedDate.getTime()) / 1000 / 60 / 60 / 24);
+
+      if(isBeen7Days) {
+        await this.userService.resetVisit(profile.visitId);
+      }
+      
+      const mapDay = {
+        0: 'Su',
+        1: 'Mo',
+        2: 'Tu',
+        3: 'We',
+        4: 'Th',
+        5: 'Fr',
+        6: 'Sa',
+      };
+      const currentDay = mapDay[profile.updatedDate.getDay()];
+      if(!visit[currentDay]) {
+        await this.userService.updateVisit({
+          day: currentDay,
+          visitId: profile.visitId,
+        });
+      }
+
+      const actualVisit = await this.userService.getVisit(profile.visitId);
 
       const response = {
         name: user.name,
@@ -46,7 +73,7 @@ class ProfileController {
           levelId: undefined,
         },
         visit: {
-          ...visit,
+          ...actualVisit,
           visitId: undefined,
         }
       };

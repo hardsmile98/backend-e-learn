@@ -32,9 +32,9 @@ export class Visit extends BaseEntity {
   constructor() {
     super();
     this.Mo = false;
-    this.Th = false;
-    this.Th = false;
+    this.Tu = false;
     this.We = false;
+    this.Th = false;
     this.Fr = false;
     this.Sa = false;
     this.Su = false;
