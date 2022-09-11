@@ -19,6 +19,9 @@ export class Profile extends BaseEntity {
   @Column('int', { nullable: false, default: 0 })
     words: number;
 
+  @Column('boolean', { nullable: false, default: false })
+    isBonusEarned: boolean;
+
   @Column({ nullable: false })
     levelId: number;
 

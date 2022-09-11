@@ -13,6 +13,7 @@ export const dbCreateConnection = async (): Promise<Connection | null> => {
       database: process.env.POSTGRES_DB,
       synchronize: true,
       logging: false,
+      cache: true,
       entities: Entries,
     });
     

@@ -6,5 +6,6 @@ const profile = new ProfileController();
 
 router.get('/me', profile.me);
 router.get('/info', profile.getInfo);
+router.post('/accrue', profile.accrue);
 
 export default router;
