@@ -76,7 +76,7 @@ class ProfileController {
         profileId,
       });
 
-      return res.json({ success: true });
+      return res.json({ success: true, coins: сoinsPerDay });
     } catch (error) {
       return res.status(500).json({success: false});
     }
