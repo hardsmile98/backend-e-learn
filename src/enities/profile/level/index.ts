@@ -6,7 +6,7 @@ import {
 @Entity()
 export class Level extends BaseEntity {
   @PrimaryGeneratedColumn()
-    levleId: number;
+    levelId: number;
 
   @Column('int', { nullable: false, default: 1 })
     value: number;

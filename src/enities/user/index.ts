@@ -21,7 +21,10 @@ export class User extends BaseEntity {
   @Column({ nullable: false })
     profileId: number;
 
-  @OneToOne(() => Profile)
-    @JoinColumn({name: 'profileId'})
+  @OneToOne(() => Profile, {
+    eager: true,
+  })
+
+  @JoinColumn({name: 'profileId'})
     profile: Profile;
 }

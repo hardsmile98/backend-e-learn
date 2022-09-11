@@ -25,12 +25,16 @@ export class Profile extends BaseEntity {
   @Column({ nullable: false })
     visitId: number;
 
-  @OneToOne(() => Level)
-    @JoinColumn({name: 'levelId'})
+  @OneToOne(() => Level, {
+    eager: true,
+  })
+  @JoinColumn({name: 'levelId'})
     level: Level;
 
-  @OneToOne(() => Visit)
-    @JoinColumn({name: 'visitId'})
+  @OneToOne(() => Visit, {
+    eager: true,
+  })
+  @JoinColumn({name: 'visitId'})
     visit: Visit;
 
   constructor() {

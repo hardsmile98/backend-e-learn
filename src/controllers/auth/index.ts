@@ -32,13 +32,22 @@ class AuthController {
       password: hashedPassword
     };
 
-    await this.userService.registerUser(userData);
+    try {
+      await this.userService.registerUser(userData);
+    } catch (error) {
+      return res.status(500).json({success: false});
+    }
+    
     return res.json({success: true});
   };
 
   // Login user
   public login = async(req: Request, res: Response) => {
     const { login, password} = req.body;
+    if (!login && !password) {
+      return res.status(400).json({ message: 'Неверные данные' });
+    }
+    
     const user = await this.userService.checkUserLogin(login);
     
     if(!user) {
