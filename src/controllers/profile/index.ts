@@ -9,12 +9,12 @@ class ProfileController {
     this.userService = new UserService();
   }
   
-  // check auth
+  // проверка при входе на авторизацию
   public me = async(_: Request, res: Response) => {
     return res.json({ success: true });
   };
 
-  // get profile info
+  // получаем информацию о профиле пользователя
   public getInfo = async(req: Request, res: Response) => {
     const { id } = req;
 
@@ -37,13 +37,6 @@ class ProfileController {
         });
       }
 
-      // Прошло ли семь дней с последнего входа
-      const isBeen7Days = Math.ceil((now.getTime() - profile.updatedDate.getTime()) / 1000 / 60 / 60 / 24);
-
-      if(isBeen7Days) {
-        await this.userService.resetVisit(profile.visitId);
-      }
-      
       const mapDay = {
         0: 'Su',
         1: 'Mo',
@@ -53,10 +46,31 @@ class ProfileController {
         5: 'Fr',
         6: 'Sa',
       };
+
+      const numberDayPassed = Math.floor((now.getTime() - profile.updatedDate.getTime()) / 1000 / 60 / 60 / 24);
+
+      if(numberDayPassed > 1) {
+        const nowDay = now.getDay();
+        const lastVisitDay = profile.updatedDate.getDay();
+      
+        const startDay = nowDay < lastVisitDay ? 0 : lastVisitDay;
+        const newVisit = new Array(nowDay - startDay - 1).fill(0).reduce((acc, _, index) => {
+          acc[mapDay[startDay + index + 1]] = false;
+          return acc;
+        }, {});
+
+        await this.userService.updateVisit({
+          visitId: profile.visitId,
+          newVisit,
+        });
+      }
+
       const currentDay = mapDay[profile.updatedDate.getDay()];
       if(!visit[currentDay]) {
         await this.userService.updateVisit({
-          day: currentDay,
+          newVisit: {
+            [currentDay]: true,
+          },
           visitId: profile.visitId,
         });
       }
@@ -83,7 +97,7 @@ class ProfileController {
     }
   };
 
-  // bonus accrual every day
+  // начисление бонуса каждый день
   public accrue = async(req: Request, res: Response) => {
     const { id } = req;
 

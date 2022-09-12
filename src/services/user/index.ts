@@ -40,27 +40,13 @@ export class UserService {
       isBonusEarned: false,
     });
   };
-
-  public updateVisit = async({ day, visitId }) => {
-    return await Visit.update(visitId, {
-      [day]: true,
-    });
-  };
   
   public getVisit = async(visitId) => {
     return await Visit.findOneBy({visitId});
   };
 
-  public resetVisit = async(visitId) => {
-    return await Visit.update(visitId, {
-      Mo: false,
-      Tu: false,
-      We: false,
-      Th: false,
-      Fr: false,
-      Sa: false,
-      Su: false,
-    });
+  public updateVisit = async({ visitId, newVisit }) => {
+    return await Visit.update(visitId, newVisit);
   };
 
   public updateBalance = async({ coins, profileId }) => {

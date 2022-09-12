@@ -10,7 +10,7 @@ class AuthController {
     this.userService = new UserService();
   }
 
-  // Register new user
+  // регистрация нового пользователя
   public register = async(req: Request, res: Response) => {
     const requestData = req.body;
     const { login, password, name } = requestData;
@@ -41,7 +41,7 @@ class AuthController {
     return res.json({success: true});
   };
 
-  // Login user
+  // вход в приложение
   public login = async(req: Request, res: Response) => {
     const { login, password} = req.body;
     if (!login && !password) {
@@ -73,7 +73,7 @@ class AuthController {
     return res.json({ success: true });
   };
 
-  // Logout
+  // выход
   public logout = async(req: Request, res: Response) => {
     res.clearCookie('token');
     return res.json({ success: true });
