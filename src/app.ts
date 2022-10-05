@@ -12,6 +12,7 @@ import cookieParser  from 'cookie-parser';
 import authMiddleware from './middleware/auth';
 import auth from './routes/auth';
 import profile from './routes/profile';
+import course from './routes/course';
 
 class Server {
   private app: Application;
@@ -52,6 +53,7 @@ class Server {
 
     this.app.use('/api/v1/auth', auth);
     this.app.use('/api/v1/profile', authMiddleware, profile);
+    this.app.use('/api/v1/course', authMiddleware, course);
   }
 
   public async start() {
