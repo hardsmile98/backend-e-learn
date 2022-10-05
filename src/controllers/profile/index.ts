@@ -38,7 +38,7 @@ class ProfileController {
       }
 
       // Прошло ли семь дней с последнего входа
-      const isBeen7Days = Math.ceil((now.getTime() - profile.updatedDate.getTime()) / 1000 / 60 / 60 / 24);
+      const isBeen7Days = Math.ceil((now.getTime() - profile.updatedDate.getTime()) / 1000 / 60 / 60 / 24) > 7;
 
       if(isBeen7Days) {
         await this.userService.resetVisit(profile.visitId);
