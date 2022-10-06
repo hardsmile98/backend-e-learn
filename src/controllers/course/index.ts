@@ -10,7 +10,11 @@ class CourseController {
   
   // get list courses
   public getList = async(_: Request, res: Response) => {
-    return res.json({ success: true });
+    const courses = await this.courseService.getCourses();
+
+    const response = courses.map((course) => ({...course, progress: { value: 0, all: 60 }}));
+
+    return res.json(response);
   };
 }
 export default CourseController;

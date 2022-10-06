@@ -31,7 +31,7 @@ export class UserService {
   };
 
   public getUserById = async(id) => {
-    return await User.findOneBy({id});
+    return await User.findOneBy({ id });
   };
 
   public updateDate = async({ date, profileId }) => {

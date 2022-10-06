@@ -1,7 +1,7 @@
-import { Visit } from "../../enities/profile/visit";
+import { Course } from "../../enities/course";
 
 export class CourseService {
-  public getVisit = async(visitId) => {
-    return await Visit.findOneBy({visitId});
+  public getCourses = async() => {
+    return await Course.find(); 
   };
 }
