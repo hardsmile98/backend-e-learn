@@ -25,14 +25,14 @@ export class Profile extends BaseEntity {
   @Column({ nullable: false })
     levelId: number;
 
-  @Column({ nullable: false })
-    visitId: number;
-
   @OneToOne(() => Level, {
     eager: true,
   })
   @JoinColumn({name: 'levelId'})
     level: Level;
+
+  @Column({ nullable: false })
+    visitId: number;
 
   @OneToOne(() => Visit, {
     eager: true,
