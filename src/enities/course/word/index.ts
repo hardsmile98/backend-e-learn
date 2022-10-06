@@ -11,5 +11,8 @@ export class Word extends BaseEntity {
     courseId: number;
     
   @Column('varchar', { nullable: false })
-    name: string;
+    word: string;
+
+  @Column('varchar', { nullable: false })
+    translate: string;
 }
