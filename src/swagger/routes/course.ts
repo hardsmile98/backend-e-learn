@@ -25,3 +25,63 @@
  *                        all:
  *                          type: number
 */
+
+/**
+ * @swagger
+ * /api/v1/course/addWord:
+ *   post:
+ *     summary: Добавление слова в курс
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               courseId:
+ *                 type: number
+ *               word:
+ *                 type: string
+ *               translate:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: добавление слова.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: boolean resoonse.
+ *                   example: true
+*/
+
+/**
+ * @swagger
+ * /api/v1/course/addCourse:
+ *   post:
+ *     summary: Добавление курса
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: добавление курса.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: boolean resoonse.
+ *                   example: true
+*/
