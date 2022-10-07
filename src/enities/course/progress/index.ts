@@ -1,9 +1,12 @@
 import {
-  Entity, Column, BaseEntity,
+  Entity, Column, BaseEntity, PrimaryGeneratedColumn,
 } from 'typeorm';
     
 @Entity()
 export class Progress extends BaseEntity {
+  @PrimaryGeneratedColumn()
+    id: number;
+  
   @Column('int', { nullable: false })
     userId: number;
 
