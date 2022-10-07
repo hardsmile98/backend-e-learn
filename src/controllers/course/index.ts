@@ -14,11 +14,20 @@ class CourseController {
 
     const courses = await this.courseService.getCourses();
 
-    courses.forEach(({ id: courseId }) => {
-      console.log(courseId);
-    });
+    const response = await Promise.all(courses.map( async (course) => {
+      const { id: courseId } = course;
 
-    const response = courses.map((course) => ({...course, progress: { value: 0, all: 60 }}));
+      const all = await this.courseService.countWordsInCourse(courseId);
+      const value = await this.courseService.valueProgressInCourse({ courseId, userId });
+
+      return {
+        ...course,
+        progress: {
+          all,
+          value,
+        }
+      };
+    }));
 
     return res.json(response);
   };
