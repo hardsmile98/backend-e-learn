@@ -76,5 +76,17 @@ class CourseController {
 
     return res.json(response);
   };
+
+  // finish learn words in course
+  public finishLearn = async(req: Request, res: Response) => {
+    const { id: userId } = req;
+    const { courseId, money, wordIds } = req.body;
+  
+    if(!courseId || !money || !wordIds) {
+      return res.status(400).json({ message: 'Неверные данные' });
+    }
+      
+    return res.json({ success: true });
+  };
 }
 export default CourseController;
