@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
+import { UserService } from '../../services/user';
 import { CourseService } from '../../services/course';
 
 class CourseController {
   private courseService: CourseService;
+  private userService: UserService;
 
   constructor(){
     this.courseService = new CourseService();
+    this.userService = new UserService();
   }
   
   // get list courses
@@ -63,11 +66,9 @@ class CourseController {
     const { id: userId } = req;
     const { courseId } = req.query;
 
-    const learnedWords = await this.courseService.getLearnedWords({ courseId, userId });
-    // исклюяаем выученные слова
-    console.log(learnedWords);
+    const learnedWordIds = await this.courseService.getLearnedWords({ courseId, userId });
 
-    const words = await this.courseService.getWords({ courseId });
+    const words = await this.courseService.getWords({ courseId, learnedWordIds });
 
     const response = {
       moneyForWord: 2,
@@ -85,7 +86,19 @@ class CourseController {
     if(!courseId || !money || !wordIds) {
       return res.status(400).json({ message: 'Неверные данные' });
     }
-      
+
+    await this.courseService.addWordsInProgress({ courseId, userId , wordIds });
+
+    const countWords = wordIds.length;
+
+    const user = await this.userService.getUserById(userId);
+  
+    const newWords = user.profile.words + countWords;
+    const newBalance = user.profile.balance + money;
+    const { profileId } = user;
+
+    await this.userService.updateWordsOrBalance({ profileId, newBalance, newWords });
+
     return res.json({ success: true });
   };
 }

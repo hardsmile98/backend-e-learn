@@ -69,4 +69,11 @@ export class UserService {
       isBonusEarned: true 
     });
   };
+
+  public updateWordsOrBalance = async({ profileId, newBalance, newWords }) => {
+    return await Profile.update(profileId, {
+      balance: newBalance,
+      words: newWords,
+    });
+  };
 }
