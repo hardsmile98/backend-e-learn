@@ -70,10 +70,25 @@ export class UserService {
     });
   };
 
-  public updateWordsOrBalance = async({ profileId, newBalance, newWords }) => {
+  public updateLevelInProfile = async({ 
+    profileId,
+    newProfile,
+    levelId,
+    newLevel,
+  }) => {
+    const { all, count, value } = newLevel;
+
+    await Level.update(levelId, {
+      all,
+      count,
+      value,
+    });
+
+    const { balance, words } = newProfile;
+
     return await Profile.update(profileId, {
-      balance: newBalance,
-      words: newWords,
+      balance,
+      words,
     });
   };
 }

@@ -110,11 +110,28 @@ class CourseController {
 
       const user = await this.userService.getUserById(userId);
   
-      const newWords = user.profile.words + countWords;
-      const newBalance = user.profile.balance + money;
+      const newProfile = {
+        words: user.profile.words + countWords,
+        balance: user.profile.balance + money,
+      };
+      
       const { profileId } = user;
+      const { levelId, value, count, all } = user.profile.level;
 
-      await this.userService.updateWordsOrBalance({ profileId, newBalance, newWords });
+      const isNewLevel = count + countWords > all;
+
+      const newLevel = {
+        value: isNewLevel ? value + 1 : value,
+        all: isNewLevel ? all + 20 : all,
+        count: isNewLevel ? count + countWords - all : count + countWords,
+      };
+ 
+      await this.userService.updateLevelInProfile({ 
+        profileId,
+        newProfile,
+        levelId,
+        newLevel,
+      });
 
       return res.json({ success: true });
     } catch (e) {
