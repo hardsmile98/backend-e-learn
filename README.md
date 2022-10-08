@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/hardsmile98/backend-e-learn.svg?branch=master)](https://travis-ci.com/hardsmile98/backend-e-learn)
+
 # backend for e-learn
 
 > Express REST API  with Typescript, JWT Authentication and support for mysql, postgresql
