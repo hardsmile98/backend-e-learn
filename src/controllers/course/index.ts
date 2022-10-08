@@ -13,26 +13,30 @@ class CourseController {
   
   // get list courses
   public getList = async(req: Request, res: Response) => {
-    const { id: userId } = req;
+    try {
+      const { id: userId } = req;
 
-    const courses = await this.courseService.getCourses();
+      const courses = await this.courseService.getCourses();
 
-    const response = await Promise.all(courses.map( async (course) => {
-      const { id: courseId } = course;
-
-      const all = await this.courseService.countWordsInCourse(courseId);
-      const value = await this.courseService.valueProgressInCourse({ courseId, userId });
-
-      return {
-        ...course,
-        progress: {
-          all,
-          value,
-        }
-      };
-    }));
-
-    return res.json(response);
+      const response = await Promise.all(courses.map( async (course) => {
+        const { id: courseId } = course;
+  
+        const all = await this.courseService.countWordsInCourse(courseId);
+        const value = await this.courseService.valueProgressInCourse({ courseId, userId });
+  
+        return {
+          ...course,
+          progress: {
+            all,
+            value,
+          }
+        };
+      }));
+  
+      return res.json(response);
+    } catch (e) {
+      res.status(500).json({ message: e });
+    }
   };
 
   // add word in course
@@ -43,9 +47,13 @@ class CourseController {
       return res.status(400).json({ message: 'Неверные данные' });
     }
 
-    await this.courseService.addWord({ courseId, word, translate });
+    try {
+      await this.courseService.addWord({ courseId, word, translate });
     
-    return res.json({ success: true });
+      return res.json({ success: true });
+    } catch (e) {
+      res.status(500).json({ message: e });
+    }
   };
 
   // add new course
@@ -56,26 +64,34 @@ class CourseController {
       return res.status(400).json({ message: 'Неверные данные' });
     }
   
-    await this.courseService.addCourse({ name });
+    try {
+      await this.courseService.addCourse({ name });
       
-    return res.json({ success: true });
+      return res.json({ success: true });
+    } catch (e) {
+      res.status(500).json({ message: e });
+    }
   };
 
   // get words for learn
   public getWords = async(req: Request, res: Response) => {
-    const { id: userId } = req;
-    const { courseId } = req.query;
+    try {
+      const { id: userId } = req;
+      const { courseId } = req.query;
 
-    const learnedWordIds = await this.courseService.getLearnedWords({ courseId, userId });
+      const learnedWordIds = await this.courseService.getLearnedWords({ courseId, userId });
 
-    const words = await this.courseService.getWords({ courseId, learnedWordIds });
+      const words = await this.courseService.getWords({ courseId, learnedWordIds });
 
-    const response = {
-      moneyForWord: 2,
-      words,
-    };
+      const response = {
+        moneyForWord: 2,
+        words,
+      };
 
-    return res.json(response);
+      return res.json(response);
+    } catch (e) {
+      res.status(500).json({ message: e });
+    }
   };
 
   // finish learn words in course
@@ -87,19 +103,23 @@ class CourseController {
       return res.status(400).json({ message: 'Неверные данные' });
     }
 
-    await this.courseService.addWordsInProgress({ courseId, userId , wordIds });
+    try {
+      await this.courseService.addWordsInProgress({ courseId, userId , wordIds });
 
-    const countWords = wordIds.length;
+      const countWords = wordIds.length;
 
-    const user = await this.userService.getUserById(userId);
+      const user = await this.userService.getUserById(userId);
   
-    const newWords = user.profile.words + countWords;
-    const newBalance = user.profile.balance + money;
-    const { profileId } = user;
+      const newWords = user.profile.words + countWords;
+      const newBalance = user.profile.balance + money;
+      const { profileId } = user;
 
-    await this.userService.updateWordsOrBalance({ profileId, newBalance, newWords });
+      await this.userService.updateWordsOrBalance({ profileId, newBalance, newWords });
 
-    return res.json({ success: true });
+      return res.json({ success: true });
+    } catch (e) {
+      res.status(500).json({ message: e });
+    }
   };
 }
 export default CourseController;

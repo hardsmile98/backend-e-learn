@@ -19,26 +19,30 @@ class AuthController {
       return res.status(400).json({ message: 'Неверные данные' });
     }
 
-    const candidate = await this.userService.checkUserLogin(login);
-    
-    if(candidate) {
-      return res.status(400).json({ message: 'Такой login уже занят' });
-    }
-
-    // crypt password
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const userData = {
-      ...requestData,
-      password: hashedPassword
-    };
-
     try {
-      await this.userService.registerUser(userData);
-    } catch (error) {
-      return res.status(500).json({success: false});
-    }
+      const candidate = await this.userService.checkUserLogin(login);
     
-    return res.json({success: true});
+      if(candidate) {
+        return res.status(400).json({ message: 'Такой login уже занят' });
+      }
+  
+      // crypt password
+      const hashedPassword = await bcrypt.hash(password, 12);
+      const userData = {
+        ...requestData,
+        password: hashedPassword
+      };
+  
+      try {
+        await this.userService.registerUser(userData);
+      } catch (error) {
+        return res.status(500).json({success: false});
+      }
+      
+      return res.json({success: true});
+    } catch (e) {
+      return res.status(500).json({ message: e });
+    }
   };
 
   // Login user
@@ -48,29 +52,33 @@ class AuthController {
       return res.status(400).json({ message: 'Неверные данные' });
     }
     
-    const user = await this.userService.checkUserLogin(login);
+    try {
+      const user = await this.userService.checkUserLogin(login);
     
-    if(!user) {
-      return res.status(400).json({ message: 'Такого пользователя нет' });
+      if(!user) {
+        return res.status(400).json({ message: 'Такого пользователя нет' });
+      }
+  
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Неверный пароль' });
+      }
+  
+      const token = jwt.sign({ id: user.id }, process.env.SECRET, {
+        expiresIn: '7d'
+      });
+  
+      const options = {
+        maxAge: 1000 * 60 * 24 * 7,
+        httpOnly: true,
+        secure: true
+      };
+  
+      res.cookie('token', token, options);
+      return res.json({ success: true });
+    } catch (e) {
+      return res.status(500).json({ message: e });
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Неверный пароль' });
-    }
-
-    const token = jwt.sign({ id: user.id }, process.env.SECRET, {
-      expiresIn: '7d'
-    });
-
-    const options = {
-      maxAge: 1000 * 60 * 24 * 7,
-      httpOnly: true,
-      secure: true
-    };
-
-    res.cookie('token', token, options);
-    return res.json({ success: true });
   };
 
   // Logout

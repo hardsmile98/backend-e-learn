@@ -78,8 +78,8 @@ class ProfileController {
         }
       };
       return res.json(response);
-    } catch (error) {
-      return res.status(500).json({success: false});
+    } catch (e) {
+      return res.status(500).json({ message: e });
     }
   };
 
@@ -104,8 +104,8 @@ class ProfileController {
       });
 
       return res.json({ success: true, coins: сoinsPerDay });
-    } catch (error) {
-      return res.status(500).json({success: false});
+    } catch (e) {
+      return res.status(500).json({ message: e });
     }
   };
 }
