@@ -57,5 +57,24 @@ class CourseController {
       
     return res.json({ success: true });
   };
+
+  // get words for learn
+  public getWords = async(req: Request, res: Response) => {
+    const { id: userId } = req;
+    const { courseId } = req.query;
+
+    const learnedWords = await this.courseService.getLearnedWords({ courseId, userId });
+    // исклюяаем выученные слова
+    console.log(learnedWords);
+
+    const words = await this.courseService.getWords({ courseId });
+
+    const response = {
+      moneyForWord: 2,
+      words,
+    };
+
+    return res.json(response);
+  };
 }
 export default CourseController;

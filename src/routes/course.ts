@@ -7,5 +7,6 @@ const course = new CourseController();
 router.get('/', course.getList);
 router.post('/addCourse', course.addCourse);
 router.post('/addWord', course.addWord);
+router.get('/learn', course.getWords);
 
 export default router;

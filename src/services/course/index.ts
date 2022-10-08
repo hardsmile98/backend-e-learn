@@ -24,6 +24,14 @@ export class CourseService {
     return await Progress.countBy({ courseId, userId }); 
   };
 
+  public getLearnedWords = async({ courseId, userId }) => {
+    return await Progress.findBy({ courseId, userId }); 
+  };
+
+  public getWords = async({ courseId, limit = 10}) => {
+    return await Word.find({ where: { courseId },take: limit }); 
+  };
+
   public addCourse = async(course) => {
     const newCourse = new Course();
     
