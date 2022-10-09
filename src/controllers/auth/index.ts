@@ -84,7 +84,14 @@ class AuthController {
 
   // Logout
   public logout = async(req: Request, res: Response) => {
-    res.clearCookie('token');
+    const options: CookieOptions = {
+      maxAge: 1000 * 60 * 24 * 7,
+      secure: true,
+      httpOnly: true,
+      sameSite: 'none',
+    };
+
+    res.clearCookie('token', options);
     return res.json({ success: true });
   };
 }
