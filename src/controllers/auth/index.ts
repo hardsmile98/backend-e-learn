@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { CookieOptions, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { UserService } from '../../services/user';
@@ -68,12 +68,12 @@ class AuthController {
         expiresIn: '7d'
       });
   
-      const options = {
+      const options: CookieOptions = {
         maxAge: 1000 * 60 * 24 * 7,
         secure: true,
         httpOnly: true,
         sameSite: 'none',
-        domain: '.netlify.app'
+        domain: '.netlify.app',
       };
   
       res.cookie('token', token, options);
