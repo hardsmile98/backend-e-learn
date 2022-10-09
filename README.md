@@ -24,7 +24,7 @@ $ git clone https://github.com/hardsmile98/backend-e-learn.git
 then
 
 ```sh
-# cd into project root
+# cd into project root 
 $ npm i
 $ npm start
 ```
