@@ -73,7 +73,6 @@ class AuthController {
         secure: true,
         httpOnly: true,
         sameSite: 'none',
-        domain: process.env.CLIENT_URL,
       };
   
       res.cookie('token', token, options);
