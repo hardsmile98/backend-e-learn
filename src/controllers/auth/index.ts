@@ -70,6 +70,9 @@ class AuthController {
   
       const options = {
         maxAge: 1000 * 60 * 24 * 7,
+        sameSite : "none",
+        secure: true,
+        domain: "https://e-learn-english.netlify.app"
         httpOnly: true,
       };
   
