@@ -10,7 +10,7 @@
 - linting - eslint
 - built with npm scripts
 
-- Frontend repository [here](https://github.com/hardsmile98/frontend-e-learn)
+Frontend repository [here](https://github.com/hardsmile98/front-e-learn)
 
 ## Install and Use
 
