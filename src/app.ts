@@ -31,7 +31,7 @@ class Server {
 
     this.app.use(cors({
       credentials: true,
-      origin: true,
+      origin: [process.env.CLIENT_URL],
     }));
     this.app.use(express.json());
 
