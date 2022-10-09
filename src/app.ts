@@ -57,6 +57,7 @@ class Server {
   }
 
   public async start() {
+    console.log(process.env)
     await dbCreateConnection();
 
     this.app.listen(this.app.get('port'), () => {
