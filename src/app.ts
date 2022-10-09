@@ -35,6 +35,8 @@ class Server {
     }));
     this.app.use(express.json());
 
+    this.app.enable("trust proxy");
+
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
 
