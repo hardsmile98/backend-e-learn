@@ -70,10 +70,10 @@ class AuthController {
   
       const options = {
         maxAge: 1000 * 60 * 24 * 7,
-        sameSite : "none",
+        sameSite: 'none',
         secure: true,
         domain: process.env.CLIENT_URL,
-        httpOnly: true,
+        httpOnly: true
       };
   
       res.cookie('token', token, options);
