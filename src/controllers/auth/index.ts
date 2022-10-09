@@ -71,7 +71,9 @@ class AuthController {
       const options = {
         maxAge: 1000 * 60 * 24 * 7,
         secure: true,
-        httpOnly: true
+        httpOnly: true,
+        sameSite:'none',
+        domain: '.netlify.app'
       };
   
       res.cookie('token', token, options);
