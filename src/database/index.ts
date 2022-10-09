@@ -15,6 +15,9 @@ export const dbCreateConnection = async (): Promise<Connection | null> => {
       logging: false,
       cache: true,
       entities: Entries,
+      ssl: process.env.NODE_ENV === 'production'
+        ? { rejectUnauthorized: false }
+        : false,
     });
     
     console.log(`DB connection success. DB: '${conn.options.database}'`);

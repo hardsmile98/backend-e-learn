@@ -41,7 +41,7 @@ class Server {
     this.app.use(cookieParser(process.env.SECRET));
     
     // logger
-    if (process.env.PRODUCTION) {
+    if (process.env.NODE_ENV === 'production') {
       this.app.use(expressPino());
     }
   }
@@ -57,7 +57,6 @@ class Server {
   }
 
   public async start() {
-    console.log(process.env)
     await dbCreateConnection();
 
     this.app.listen(this.app.get('port'), () => {
